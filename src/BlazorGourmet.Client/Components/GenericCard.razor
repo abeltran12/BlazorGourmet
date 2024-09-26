@@ -1,0 +1,39 @@
+﻿<div class="card h-100 fade-in">
+    <img class="card-img-top" alt="Movie Poster" src="@ImageUrl" />
+    <div class="card-body border-top bg-light" style="max-height: 300px; overflow-y: auto;">
+        <h5 class="card-title"><strong>@Title</strong></h5>
+        <p class="card-text">
+            @Description
+        </p>
+    </div>
+    @if (!IsLastest)
+    {
+        <div class="card-footer text-center bg-success">
+            <img src="/images/Blazor-gourmet-logo.png" alt="Logo" height="30" />
+        </div>
+    }
+    else
+    {
+        <div class="card-footer text-center">
+            <a class="btn btn-success" href="/lastests/detail/@Id">Details</a>
+        </div>
+    }
+
+</div>
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? ImageUrl { get; set; }
+
+    [Parameter]
+    public required string Title { get; set; }
+
+    [Parameter]
+    public required string Description { get; set; }
+
+    [Parameter] 
+    public bool IsLastest { get; set; }
+}

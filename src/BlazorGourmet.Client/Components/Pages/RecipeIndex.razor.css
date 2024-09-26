@@ -1,0 +1,33 @@
+﻿.carousel .col img {
+    max-width: 40px; /* Tamaño pequeño para las banderas */
+    margin: 3px;
+}
+
+.oval {
+    background-color: #f0f0f0; /* Fondo del óvalo */
+    border-radius: 50px; /* Hace que el div sea ovalado */
+    padding: 10px 20px; /* Espaciado interno */
+    display: inline-flex; /* Flexbox para alinear el contenido horizontalmente */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    height: 30px; /* Altura del óvalo */
+    width: auto; /* Ajuste automático según el contenido */
+}
+
+.name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 4px; /* Espaciado entre el nombre y el guion */
+}
+
+.flag {
+    width: 40px; /* Tamaño de la bandera */
+    height: auto;
+    margin-right: 4px;
+}
+
+@media (max-width: 576px) {
+    .oval {
+        width: 100%; /* Adaptación a pantallas pequeñas */
+        justify-content: space-between;
+    }
+}

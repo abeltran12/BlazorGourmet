@@ -1,0 +1,8 @@
+﻿.navStyle {
+    background-color: var(--cf-green-core);
+}
+
+.navbar-nav {
+    --bs-navbar-color: white;
+    --bs-navbar-hover-color: var(--cf-theme-400);
+}

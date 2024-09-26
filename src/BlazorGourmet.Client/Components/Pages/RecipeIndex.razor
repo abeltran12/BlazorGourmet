@@ -1,0 +1,118 @@
+﻿@page "/recipes"
+@inject CachedMemberService MealDbService
+@rendermode InteractiveServer
+
+<PageTitle>Recipes</PageTitle>
+
+<div class="d-flex justify-content-center align-items-center mt-4">
+    <div class="row">
+        <div class="col-12">
+            <!-- Botón con flecha hacia la izquierda -->
+            <div class="input-group align-items-stretch">
+                <button type="button" class="btn btn-secondary" @onclick="PrevPage"
+                        style="height: 40px;" disabled="@((CurrentPage == 1))">
+                    <i class="bi bi-arrow-left"></i>
+                </button>
+
+                <ul class="list-unstyled d-flex" style="border: 2px solid #ccc; height: 40px; padding: 0; margin: 0; width: 300px;">
+                    @foreach (var item in Countries)
+                    {
+                        <li @onclick="@(() => SelectItem(item))" class="ms-1"
+                            style="cursor: pointer; background-color: @(selectedItem == item ? "rgba(128, 128, 128, 0.5)" : "transparent");
+                                   color: @(selectedItem == item ? "white" : "black"); padding: 5px;
+                                   border-radius: 5px; display: flex; align-items: center; height: 100%;">
+                            <img src="@item.Flag" alt="@item.Area Flag" style="width: 30px; height: auto; margin-right: 5px;" />
+                            
+                        </li>
+                    }
+                </ul>
+
+                <!-- Botón con flecha hacia la derecha -->
+                <button type="button" class="btn btn-secondary"
+                        disabled="@((CurrentPage == TotalPages))" style="height: 40px;" @onclick="NextPage">
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-xxl py-3">
+    @if (isLoading)
+    {
+        <Loader />
+    }
+    else if (Recipes is not null && Recipes.Count() > 0)
+    {
+        <div class="d-flex flex-column flex-md-row justify-content-between my-3">
+            <div class="row row-cols-2 row-cols-lg-4 justify-content-center justify-content-md-start">
+                @foreach (var recipe in Recipes)
+                {
+                    <div class="col mb-3">
+                        <GenericCard Id="@recipe.IdMeal"
+                                     ImageUrl="@recipe.MealThumb"
+                                     Title="@recipe.Meal"
+                                     Description="@recipe.Instructions"
+                                     IsLastest="true" />
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else if (Recipes is not null && Recipes.Count() == 0)
+    {
+        <h1 class="text-center text-success">No resuts found...</h1>
+    }
+</div>
+
+
+
+@code {
+    private bool isLoading = false;
+    private int CurrentPage = 1;
+    private int TotalPages = 5;
+
+    private Country selectedItem = new Country();
+
+    List<Recipe>? Recipes { get; set; }
+
+    List<Country> Countries { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        GetCountries(CurrentPage);
+    }
+
+    private void GetCountries(int page)
+    {
+        Countries = MealDbService.GetCountriesPaged(page);
+    }
+
+    private void NextPage()
+    {
+        if (CurrentPage < TotalPages)
+        {
+            CurrentPage++;
+            GetCountries(CurrentPage);
+        }
+    }
+
+    private void PrevPage()
+    {
+        if (CurrentPage > 1)
+        {
+            CurrentPage--;
+            GetCountries(CurrentPage);
+        }
+    }
+
+    private async Task SelectItem(Country item)
+    {
+        isLoading = true;
+        selectedItem = item;
+        Recipes = await MealDbService.GetMealsByArea(item.Area);
+        isLoading = false;
+    }
+}
+

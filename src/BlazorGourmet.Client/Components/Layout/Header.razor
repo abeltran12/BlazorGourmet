@@ -1,0 +1,32 @@
+﻿<nav class="navbar navStyle navbar-expand-lg" data-bs-theme="dark">
+    <div class="container-xxl">
+        <a class="me-3" href="/">
+            <img src="/images/Blazor-gourmet-logo.png" alt="Logo" height="50" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBM" aria-controls="navbarBM" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarBM">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="recipes" Match="NavLinkMatch.All">
+                        <span><i class="bi bi-cookie"></i></span>
+                        Recipes
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="categories" Match="NavLinkMatch.All">
+                        <span><i class="bi bi-card-list"></i></span>
+                        Categories
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="lastests" Match="NavLinkMatch.All">
+                        <span><i class="bi bi-fire"></i></span>
+                        Latest Recipes
+                    </NavLink>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
